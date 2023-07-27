@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: #0093e9;
+  background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%);
+  position: fixed;
+  z-index: 111;
+  width: 100%;
+}
+
+.logo {
+  width: 190px;
+  margin-left: 100px;
+}
+.leftbar {
+  display: flex;
+  gap: 100px;
+}
+.links {
+  display: flex;
+  gap: 40px;
+  font-size: 28px;
+  font-weight: 500;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 100px;
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+@media screen and (max-width: 1600px) {
+  .links {
+    gap: 10px;
+    font-size: 22px;
+    font-weight: 400;
+    margin-right: 20px;
+    word-break: normal;
+  }
+  .leftbar {
+    gap: 60px;
+  }
+  .logo {
+    margin-left: 20px;
+  }
+}

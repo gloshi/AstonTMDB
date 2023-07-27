@@ -1,0 +1,48 @@
+.wrapper {
+}
+.bannerimg {
+  object-fit: contain;
+  width: 100%;
+  position: relative;
+}
+.arrows {
+  position: absolute;
+  z-index: 10;
+  right: 100px;
+  top: 1100px;
+
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  button {
+    background-color: lightblue;
+  }
+}
+.numbers {
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+.numbersActive {
+  color: lightblue;
+}
+
+@media screen and (max-width: 1900px) {
+  .arrows {
+    top: 800px;
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .arrows {
+    top: 700px;
+  }
+}
+
+
+@media screen and (max-width: 1200px) {
+    .arrows {
+      top: 200px;
+    }
+  }

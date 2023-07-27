@@ -1,0 +1,51 @@
+.wrapper {
+  margin-top: 100px;
+}
+
+.grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 70px;
+  grid-row-gap: 80px;
+}
+.text {
+  padding: 0;
+  margin: 0;
+  font-size: 30px;
+  color: rgb(68, 0, 255);
+}
+.card {
+  width: 260px;
+  cursor: pointer;
+}
+.title {
+  font-size: 20px;
+  color: black;
+}
+.params {
+  display: flex;
+  justify-content: space-between;
+  
+  .year {
+    font-size: 18px;
+  }
+}
+.poster {
+  width: 260px;
+  border-radius: 4px;
+  margin-bottom: 11px;
+  &:hover {
+    width: 270px;
+    transition: width 0.4s;
+    border-radius: 4px;
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+  }
+}
