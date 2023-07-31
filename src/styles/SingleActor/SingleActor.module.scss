@@ -1,0 +1,33 @@
+.container {
+    padding-top: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+.poster {
+    width: 650px;
+}
+.name {
+    font-size: 42px;
+    padding: 0px;
+    color: rgb(92, 0, 92);
+}
+.birthday {
+    font-size: 42px;
+    padding: 0px;
+    color: rgb(92, 0, 92);
+}
+.overview {
+    margin-top: 65px;
+    font-size: 42px;
+    padding: 0px;
+    color: rgb(92, 0, 92);
+}
+.overviewText {
+    width: 1200px;
+    margin-top: 65px;
+    font-size: 28px;
+    padding: 0px;
+    color: rgb(92, 0, 92);
+}

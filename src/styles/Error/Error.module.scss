@@ -1,0 +1,19 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+    gap: 50px;
+    h3 {
+        padding-top: 320px;
+        font-size: 34px;
+        color: lightcoral;
+    }
+    a {
+        text-decoration: none;
+        font-size: 27px;
+        cursor: pointer;
+        color: black;
+    }
+}

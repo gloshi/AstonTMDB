@@ -1,0 +1,77 @@
+.container {
+    padding-top: 220px;
+    display: flex;
+   align-items: center;
+    flex-direction: column;
+}
+.moviecard {
+    display: flex;
+    gap: 60px;
+}
+.poster {
+    width: 550px;
+}
+.info {
+    display: flex;
+    flex-direction: column;
+
+}
+.title {
+    font-size: 42px;
+    padding: 0px;
+    color: rgb(92, 0, 92);
+}
+.rating {
+    display: flex;
+    margin-top: 45px;
+    gap: 20px;
+    align-items: center;
+    font-size: 32px;
+    color: rgb(92, 0, 92);
+}
+.genresBox {
+    margin-top: 45px;
+    display: flex;
+    gap: 10px;
+    font-size: 32px;
+    color: rgb(92, 0, 92);
+    opacity: 0.7;
+}
+.overview {
+    margin-top: 65px;
+    font-size: 42px;
+    padding: 0px;
+    color: rgb(92, 0, 92);
+}
+.overviewText {
+    width: 800px;
+    margin-top: 65px;
+    font-size: 28px;
+    padding: 0px;
+    color: rgb(92, 0, 92);
+}
+.buttons {
+    margin-top: 85px;
+    display: flex;
+    gap: 200px;
+}
+.trailer {
+    background: #0086e0;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid #0086e0;
+    font-size: 1.5rem;
+    padding: 5px;
+}
+.favorite {
+    background: #0086e0;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid #0086e0;
+    font-size: 1.5rem
+}
+

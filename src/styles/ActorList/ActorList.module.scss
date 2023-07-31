@@ -1,0 +1,82 @@
+.container {
+}
+.items {
+  //     display: grid;
+  // grid-template-columns: repeat(5, 1fr);
+  // grid-template-rows: repeat(5, 1fr);
+  // grid-column-gap: 30px;
+  // grid-row-gap: 30px;
+  display: flex;
+  width: 1800px;
+  flex-wrap: wrap;
+  gap: 50px;
+  align-items: center;
+}
+.card {
+  img {
+    width: 300px;
+    height: 449px;
+    cursor: pointer;
+  }
+}
+.name {
+  margin-top: 5px;
+  font-size: 24px;
+  color: rgb(92, 0, 92);
+}
+
+.character {
+  margin-top: 5px;
+  font-size: 18px;
+  color: rgb(92, 0, 92);
+  opacity: 0.7;
+}
+.actorsTitle {
+  font-size: 32px;
+  color: rgb(68, 0, 255);
+}
+.params {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.wrapperPagination {
+    margin-top: 35px;
+    margin-bottom: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pagination {
+    li {
+      display: inline-block;
+  
+      a {
+        text-align: center;
+        width: 45px;
+        line-height: 42px;
+        height: 45px;
+        border: 1px solid #4f1efe;
+        border-radius: 30px;
+        margin-right: 10px;
+        cursor: pointer;
+        display: inline-block;
+        color: #4f1efe;
+  
+        &:hover {
+          background-color: #4f1efe;
+          color: #fff;
+        }
+      }
+    }
+    :global {
+        .selected {
+          a {
+            background-color: #4f1efe;
+            color: #fff;
+          }
+        }
+      }
+}
+

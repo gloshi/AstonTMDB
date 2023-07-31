@@ -1,11 +1,16 @@
-import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { PaginableResult } from '../../types';
-import { CastPerson, Configuration, Genre, IMovie, MovieAccountState } from './types';
-import { useAxios } from '../../../hooks/useAxios';
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PaginableResult } from "../../types";
+import {
+  CastPerson,
+  Configuration,
+  Genre,
+  IMovie,
+  MovieAccountState,
+} from "./types";
+import { useAxios } from "../../../hooks/useAxios";
+import { RootState } from "../..";
 
-
-
-export * from './types';
+export * from "./types";
 
 export interface MoviesState {
   isLoading: boolean;
@@ -34,7 +39,7 @@ export const initialPaginableResult: PaginableResult<IMovie[]> = {
 
 export const initialConfiguration: Configuration = {
   images: {
-    secure_base_url: '',
+    secure_base_url: "",
     poster_sizes: [],
     backdrop_sizes: [],
     profile_sizes: [],
@@ -61,59 +66,68 @@ const initialState: MoviesState = {
   personDetails: {} as CastPerson,
 };
 
-export const fetchConfigs = createAsyncThunk('movies/FETCH_CONFIGS', async () => {
-  const response = await useAxios.get<Configuration>('configuration');
+export const fetchConfigs = createAsyncThunk(
+  "movies/FETCH_CONFIGS",
+  async () => {
+    const response = await useAxios.get<Configuration>("configuration");
 
-  return response.data;
-});
+    return response.data;
+  }
+);
 
 export const fetchTrendingMovies = createAsyncThunk(
-  'movies/FETCH_TRENDING_MOVIES',
+  "movies/FETCH_TRENDING_MOVIES",
   async () => {
-    const response = await useAxios.get<PaginableResult<IMovie[]>>('trending/movie/week');
+    const response = await useAxios.get<PaginableResult<IMovie[]>>(
+      "trending/movie/week"
+    );
 
     return response.data.results;
-  },
+  }
 );
 
 export const fetchPopularMovies = createAsyncThunk(
-  'movies/FETCH_POPULAR_MOVIES',
+  "movies/FETCH_POPULAR_MOVIES",
   async () => {
-    const response = await useAxios.get<PaginableResult<IMovie[]>>('movie/popular');
-
-    return response.data;
-  },
-);
-
-export const fetchNowPlayngMovies = createAsyncThunk(
-  'movies/FETCH_NOW_PLAYING_MOVIES',
-  async () => {
-    const response = await useAxios.get<PaginableResult<IMovie[]>>('movie/now_playing');
-
-    return response.data;
-  },
-);
-
-export const fetchUpcomingMovies = createAsyncThunk(
-  'movies/FETCH_UPCOMING_MOVIES',
-  async () => {
-    const response = await useAxios.get<PaginableResult<IMovie[]>>('movie/upcoming');
-
-    return response.data;
-  },
-);
-
-export const fetchTopRatedMovies = createAsyncThunk(
-  'movies/FETCH_TOP_RATED_MOVIES',
-  async (page: number) => {
-   
     const response = await useAxios.get<PaginableResult<IMovie[]>>(
-      `movie/top_rated?page=${page}`,
+      "movie/popular"
     );
 
     return response.data;
-   
-  },
+  }
+);
+
+export const fetchNowPlayngMovies = createAsyncThunk(
+  "movies/FETCH_NOW_PLAYING_MOVIES",
+  async () => {
+    const response = await useAxios.get<PaginableResult<IMovie[]>>(
+      "movie/now_playing"
+    );
+
+    return response.data;
+  }
+);
+
+export const fetchUpcomingMovies = createAsyncThunk(
+  "movies/FETCH_UPCOMING_MOVIES",
+  async () => {
+    const response = await useAxios.get<PaginableResult<IMovie[]>>(
+      "movie/upcoming"
+    );
+
+    return response.data;
+  }
+);
+
+export const fetchTopRatedMovies = createAsyncThunk(
+  "movies/FETCH_TOP_RATED_MOVIES",
+  async (page: number) => {
+    const response = await useAxios.get<PaginableResult<IMovie[]>>(
+      `movie/top_rated?page=${page}`
+    );
+
+    return response.data;
+  }
 );
 
 type SearchMoviesArgs = {
@@ -122,40 +136,26 @@ type SearchMoviesArgs = {
 };
 
 export const searchMovies = createAsyncThunk(
-  'movies/SEARCH_MOVIES',
+  "movies/SEARCH_MOVIES",
   async ({ query, page }: SearchMoviesArgs) => {
     const response = await useAxios.get<PaginableResult<IMovie[]>>(
-      `search/movie?query=${query}&page=${page}`,
+      `search/movie?query=${query}&page=${page}`
     );
 
     return response.data;
-  },
+  }
 );
 
-// export const fetchMovieDetails = createAsyncThunk(
-//   'movies/FETCH_MOVIE_DETAILS',
-//   async (movieId: string, { getState }) => {
-//     const { auth } = getState() as RootState;
+export const fetchMovieDetails = createAsyncThunk(
+  "movies/FETCH_MOVIE_DETAILS",
+  async (movieId: string, { getState }) => {
+    const response = await useAxios.get<IMovie>(
+      `/movie/${movieId}?&append_to_response=credits,similar,videos,images,recommendations,external_ids,account_states`
+    );
 
-//     const response = await useAxios.get<IMovie>(
-//       `/movie/${movieId}?&append_to_response=credits,similar,videos,images,recommendations,external_ids,account_states`,
-//     );
-
-//     response.data.year = formatReleaseDate(response.data.release_date, 'yyyy');
-//     response.data.credits.crew = reduceCrewByDepartment(response.data.credits.crew);
-
-//     if (auth.isUserLoggedIn) {
-//       const movieAccountStateResponse = await useAxios.get<MovieAccountState>(
-//         `/movie/${movieId}/account_states`,
-//       );
-
-//       response.data.isFavorite = movieAccountStateResponse.data.favorite;
-//       response.data.isInWatchList = movieAccountStateResponse.data.watchlist;
-//     }
-
-//     return response.data;
-//   },
-// );
+    return response.data;
+  }
+);
 
 type FetchMovieAccountStateArgs = {
   movieId: number;
@@ -163,10 +163,10 @@ type FetchMovieAccountStateArgs = {
 };
 
 export const fetchMovieAccountState = createAsyncThunk(
-  'movies/FETCH_MOVIE_ACCOUNT_STATE',
+  "movies/FETCH_MOVIE_ACCOUNT_STATE",
   async ({ movieId, context }: FetchMovieAccountStateArgs) => {
     const movieAccountStateResponse = await useAxios.get<MovieAccountState>(
-      `/movie/${movieId}/account_states`,
+      `/movie/${movieId}/account_states`
     );
 
     return {
@@ -174,20 +174,15 @@ export const fetchMovieAccountState = createAsyncThunk(
       accountState: movieAccountStateResponse.data,
       context,
     };
-  },
+  }
 );
 
-export const fetchGenres = createAsyncThunk('movies/FETCH_GENRES', async () => {
-  const response = await useAxios.get('genre/movie/list');
+export const fetchGenres = createAsyncThunk("movies/FETCH_GENRES", async () => {
+  const response = await useAxios.get("genre/movie/list");
 
   return response.data.genres as Genre[];
 });
 
-type AddMovieToFavoritesArgs = {
-  movieId: number;
-  isFavorite: boolean;
-  context: string;
-};
 
 // export const addMovieToFavorites = createAsyncThunk(
 //   'profile/ADD_TO_FAVORITES',
@@ -234,14 +229,14 @@ type AddMovieToWatchlistArgs = {
 // );
 
 export const fetchPersonDetails = createAsyncThunk(
-  'movies/FETCH_PERSON_DETAILS',
+  "movies/FETCH_PERSON_DETAILS",
   async (personId: number) => {
     const response = await useAxios.get<CastPerson>(
-      `/person/${personId}?append_to_response=external_ids`,
+      `/person/${personId}?append_to_response=external_ids`
     );
 
     return response.data;
-  },
+  }
 );
 
 type FetchDiscoverArgs = {
@@ -250,18 +245,18 @@ type FetchDiscoverArgs = {
 };
 
 export const fetchDiscover = createAsyncThunk(
-  'movies/FETCH_DISCOVER',
+  "movies/FETCH_DISCOVER",
   async ({ genreId, page }: FetchDiscoverArgs) => {
     const response = await useAxios.get<PaginableResult<IMovie[]>>(
-      `/discover/movie?with_genres=${genreId}&page=${page}`,
+      `/discover/movie?with_genres=${genreId}&page=${page}`
     );
 
     return response.data;
-  },
+  }
 );
 
 const moviesReducer = createSlice({
-  name: 'movies',
+  name: "movies",
   initialState,
   reducers: {
     clearMovieDetails(state) {
@@ -306,8 +301,7 @@ const moviesReducer = createSlice({
     });
     builder.addCase(fetchTopRatedMovies.rejected, (state, action) => {
       state.isLoading = false;
-      console.log(action.payload)
-
+      console.log(action.payload);
     });
 
     builder.addCase(searchMovies.pending, (state) => {
@@ -317,19 +311,22 @@ const moviesReducer = createSlice({
       state.searchLoading = false;
 
       if (action.payload.page > 1) {
-        action.payload.results = [...state.search.results, ...action.payload.results];
+        action.payload.results = [
+          ...state.search.results,
+          ...action.payload.results,
+        ];
       }
 
       state.search = action.payload;
     });
 
-    // builder.addCase(fetchMovieDetails.pending, (state) => {
-    //   state.isLoadingDetails = true;
-    // });
-    // builder.addCase(fetchMovieDetails.fulfilled, (state, action) => {
-    //   state.isLoadingDetails = false;
-    //   state.movieDetails = action.payload;
-    // });
+    builder.addCase(fetchMovieDetails.pending, (state) => {
+      state.isLoadingDetails = true;
+    });
+    builder.addCase(fetchMovieDetails.fulfilled, (state, action) => {
+      state.isLoadingDetails = false;
+      state.movieDetails = action.payload;
+    });
 
     builder.addCase(fetchGenres.fulfilled, (state, action) => {
       state.genres = action.payload;
@@ -373,7 +370,7 @@ const moviesReducer = createSlice({
     builder.addCase(fetchMovieAccountState.fulfilled, (state, action) => {
       const { movieId, context, accountState } = action.payload;
 
-      if (context === 'topRated') {
+      if (context === "topRated") {
         state.topRated.results = state.topRated.results.map((movie) => {
           if (movie.id === movieId) {
             movie.isFavorite = accountState.favorite;
@@ -400,7 +397,10 @@ const moviesReducer = createSlice({
       state.isLoading = false;
 
       if (action.payload.page > 1) {
-        action.payload.results = [...state.discover.results, ...action.payload.results];
+        action.payload.results = [
+          ...state.discover.results,
+          ...action.payload.results,
+        ];
       }
 
       state.discover = action.payload;
@@ -408,10 +408,7 @@ const moviesReducer = createSlice({
   },
 });
 
-
-
-export const { clearMovieDetails, setMovieDetailsBackdrop } = moviesReducer.actions;
+export const { clearMovieDetails, setMovieDetailsBackdrop } =
+  moviesReducer.actions;
 
 export default moviesReducer.reducer;
-
-

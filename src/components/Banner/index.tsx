@@ -1,18 +1,33 @@
-import React, { useMemo, useState } from "react";
+import React, { memo, useMemo, useState } from "react";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 
 import styles from "../../styles/Banner/Banner.module.scss";
 import Button from "../Button";
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
-const Banner = () => {
+import Load from "../../pages/Load";
+const Banner: React.FC = memo(() => {
   const { popular, isLoading } = useSelector(
     (state: RootState) => state.movies
   );
   const bannerArray = useMemo(() => popular.results.slice(0, 7), [popular]);
   const numbersArray = [1, 2, 3, 4, 5, 6, 7];
   const [slideIndex, setSlideIndex] = useState<number>(1);
-
+  const memoArr = useMemo(
+    () =>
+      numbersArray.map((el, i) => (
+        <span
+          onClick={() => move(i + 1)}
+          className={
+            slideIndex - 1 === i ? styles.numbers : styles.numbersActive
+          }
+          key={i}
+        >
+          {el}
+        </span>
+      )),
+    [slideIndex]
+  );
   const nextSlide = () => {
     if (slideIndex !== bannerArray.length) {
       setSlideIndex(slideIndex + 1);
@@ -28,7 +43,7 @@ const Banner = () => {
     }
   };
   if (isLoading || popular.results.length === 0) {
-    return <div>Loading...</div>;
+    return <Load />;
   }
   const move = (index: number) => {
     setSlideIndex(index);
@@ -47,23 +62,13 @@ const Banner = () => {
         <Button className={styles.arrowLeft} onClick={prevSlide}>
           <AiOutlineArrowLeft />
         </Button>
-        {numbersArray.map((el, i) => (
-          <span
-            onClick={() => move(i + 1)}
-            className={
-              slideIndex - 1 === i ? styles.numbers : styles.numbersActive
-            }
-            key={i}
-          >
-            {el}
-          </span>
-        ))}
+        {memoArr}
         <Button className={styles.arrowRight} onClick={nextSlide}>
           <AiOutlineArrowRight />
         </Button>
       </div>
     </section>
   );
-};
+});
 
 export default Banner;
