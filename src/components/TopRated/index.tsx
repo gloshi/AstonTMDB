@@ -12,15 +12,25 @@ import { AppRoutes } from "../../approutes/RoutesConfig";
 const TopRated: React.FC = () => {
   const { topRated, isLoading } = useAppSelector((state) => state.movies);
   const [page, setPage] = useState<number>(1);
-  
+  const [pageLoading,setPageLoading] = useState<boolean>(false)
   const pagesArr = [1, 2, 3, 4, 5, 6, 7, 8];
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fetchTopRatedMovies(page));
+    getMovies()
   }, [page]);
 
-  if (isLoading) {
+  console.log(topRated)
+
+  //
+  const getMovies = async () => {
+    setPageLoading(true)
+    await dispatch(fetchTopRatedMovies(page))
+    setPageLoading(false)
+  }
+
+
+  if (isLoading || pageLoading) {
     return <Load />;
   }
 
@@ -62,7 +72,7 @@ const TopRated: React.FC = () => {
         {pagesArr.map((el, i) => (
           <div
             key={i}
-            onClick={() => setPage(i)}
+            onClick={() => setPage(i + 1)}
             className={styles.pageNumber}
           >
             {el}

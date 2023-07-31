@@ -36,7 +36,6 @@ const ActorsList = memo((props: ActorsListProps) => {
   if (!list.props.list) {
     return <div>load...</div>;
   }
-  console.log(list);
   return (
     <section className={styles.container}>
       <div className={styles.params}>
@@ -82,7 +81,6 @@ const ActorsList = memo((props: ActorsListProps) => {
                     }
                     alt={el.name}
                   />
-
                   <h4 className={styles.name}>{el.name}</h4>
                   <p className={styles.character}>{el.character}</p>
                 </div>
