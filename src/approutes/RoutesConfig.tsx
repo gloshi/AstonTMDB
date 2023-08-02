@@ -6,6 +6,7 @@ import Genres from "../pages/Genres";
 import ErrorPage from "../pages/Error";
 import SingleMovie from "../pages/SingleMovie";
 import SingleActor from "../pages/SingleActor";
+import SearchPage from "../pages/SearchPage";
 
 export enum AppRoutes {
   MAIN = "/",
@@ -36,7 +37,7 @@ export const routeConfig: Record<AppRoutes, RouteProps> = {
   },
   [AppRoutes.SEARCH]: {
     path: RoutePath.search,
-    element: <Search />,
+    element: <SearchPage />,
   },
   [AppRoutes.TOP_RATED]: {
     path: RoutePath.rated,

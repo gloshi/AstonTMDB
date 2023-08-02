@@ -1,33 +1,40 @@
+import { memo, useEffect, useState } from "react";
 import styles from "../../styles/GridFilms/GridFilms.module.scss";
-import { GrFavorite } from "react-icons/gr";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import Load from "../../pages/Load";
-import { useEffect, useState } from "react";
-import { fetchTopRatedMovies } from "../../store/slice/movies";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { BiStar } from "react-icons/bi";
+import { IMovie, fetchTopRatedMovies } from "../../store/slice/movies";
+import Load from "../../pages/Load";
 import { Link } from "react-router-dom";
 import { AppRoutes } from "../../approutes/RoutesConfig";
+import { GrFavorite } from "react-icons/gr";
+import { BiStar } from "react-icons/bi";
+import { PaginableResult } from "../../store/types";
 
-const TopRated: React.FC = () => {
-  const { topRated, isLoading } = useAppSelector((state) => state.movies);
+interface GridFilmsProps {
+  category: IMovie[]
+  fetchMovies: any
+  isLoading: boolean
+  text: string
+}
+
+
+const GridFilms = memo(({ category, fetchMovies, text, isLoading }: GridFilmsProps) => {
   const [page, setPage] = useState<number>(1);
-  const [pageLoading,setPageLoading] = useState<boolean>(false)
+  const [pageLoading, setPageLoading] = useState<boolean>(false);
   const pagesArr = [1, 2, 3, 4, 5, 6, 7, 8];
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getMovies()
+    getMovies();
   }, [page]);
 
 
-  //
+  //get
   const getMovies = async () => {
-    setPageLoading(true)
-    await dispatch(fetchTopRatedMovies(page))
-    setPageLoading(false)
-  }
-
+    setPageLoading(true);
+    await dispatch(fetchMovies(page));
+    setPageLoading(false);
+  };
 
   if (isLoading || pageLoading) {
     return <Load />;
@@ -35,9 +42,9 @@ const TopRated: React.FC = () => {
 
   return (
     <section className={styles.wrapper}>
-      <h3 className={styles.text}>Top rated movies</h3>
+      <h3 className={styles.text}>{text} movies</h3>
       <div className={styles.grid}>
-        {topRated.results.map((el, i) => (
+        {category.map((el) => (
           <div key={el.id} className={styles.card}>
             <Link to={AppRoutes.SINGLE_MOVIE + `/${el.id}`}>
               <img
@@ -80,6 +87,6 @@ const TopRated: React.FC = () => {
       </div>
     </section>
   );
-};
+});
 
-export default TopRated;
+export default GridFilms;

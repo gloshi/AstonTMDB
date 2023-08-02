@@ -22,6 +22,7 @@ export interface MoviesState {
   upcoming: PaginableResult<IMovie[]>;
   topRated: PaginableResult<IMovie[]>;
   search: PaginableResult<IMovie[]>;
+  searchActor: PaginableResult<CastPerson[]>;
   discover: PaginableResult<IMovie[]>;
   searchLoading: boolean;
   genres: Genre[];
@@ -36,7 +37,12 @@ export const initialPaginableResult: PaginableResult<IMovie[]> = {
   total_pages: 0,
   total_results: 0,
 };
-
+export const initialPaginableResultforActor: PaginableResult<CastPerson[]> = {
+  page: 0,
+  results: [],
+  total_pages: 0,
+  total_results: 0,
+};
 export const initialConfiguration: Configuration = {
   images: {
     secure_base_url: "",
@@ -60,6 +66,7 @@ const initialState: MoviesState = {
   upcoming: initialPaginableResult,
   topRated: initialPaginableResult,
   search: initialPaginableResult,
+  searchActor: initialPaginableResultforActor,
   discover: initialPaginableResult,
   genres: [] as Genre[],
   movieDetails: {} as IMovie,
@@ -131,21 +138,33 @@ export const fetchTopRatedMovies = createAsyncThunk(
 );
 
 type SearchMoviesArgs = {
-  query: string;
-  page: number;
+  searchValue: string;
+  page?: number;
 };
-
+type SearchPersonArgs = {
+  searchValue: string;
+  page?: number;
+};
 export const searchMovies = createAsyncThunk(
   "movies/SEARCH_MOVIES",
-  async ({ query, page }: SearchMoviesArgs) => {
+  async ({ searchValue }: SearchMoviesArgs) => {
     const response = await useAxios.get<PaginableResult<IMovie[]>>(
-      `search/movie?query=${query}&page=${page}`
+      `search/movie?query=${searchValue}`
     );
 
     return response.data;
   }
 );
+export const searchPerson = createAsyncThunk(
+  "movies/SEARCH_PERSON",
+  async ({ searchValue }: SearchPersonArgs) => {
+    const response = await useAxios.get<PaginableResult<CastPerson[]>>(
+      `search/person?query=${searchValue}`
+    );
 
+    return response.data;
+  }
+);
 export const fetchMovieDetails = createAsyncThunk(
   "movies/FETCH_MOVIE_DETAILS",
   async (movieId: string, { getState }) => {
@@ -182,51 +201,6 @@ export const fetchGenres = createAsyncThunk("movies/FETCH_GENRES", async () => {
 
   return response.data.genres as Genre[];
 });
-
-
-// export const addMovieToFavorites = createAsyncThunk(
-//   'profile/ADD_TO_FAVORITES',
-//   async ({ movieId, isFavorite, context }: AddMovieToFavoritesArgs, { getState }) => {
-//     const { profile } = getState() as RootState;
-
-//     await useAxios.post(`/account/${profile.account?.id}/favorite`, {
-//       media_id: movieId,
-//       media_type: 'movie',
-//       favorite: isFavorite,
-//     });
-
-//     return {
-//       movieId,
-//       isFavorite,
-//       context,
-//     };
-//   },
-// );
-
-type AddMovieToWatchlistArgs = {
-  movieId: number;
-  isInWatchList: boolean;
-  context: string;
-};
-
-// export const addMovieToWatchList = createAsyncThunk(
-//   'profile/ADD_TO_WATCHLIST',
-//   async ({ movieId, isInWatchList, context }: AddMovieToWatchlistArgs, { getState }) => {
-//     const { profile } = getState() as RootState;
-
-//     await useAxios.post(`/account/${profile.account?.id}/watchlist`, {
-//       media_id: movieId,
-//       media_type: 'movie',
-//       watchlist: isInWatchList,
-//     });
-
-//     return {
-//       movieId,
-//       isInWatchList,
-//       context,
-//     };
-//   },
-// );
 
 export const fetchPersonDetails = createAsyncThunk(
   "movies/FETCH_PERSON_DETAILS",
@@ -293,10 +267,6 @@ const moviesReducer = createSlice({
     builder.addCase(fetchTopRatedMovies.fulfilled, (state, action) => {
       state.isLoading = false;
 
-      // if (action.payload.page > 1) {
-      //   action.payload.results = [...state.topRated.results, ...action.payload.results];
-      // }
-
       state.topRated = action.payload;
     });
     builder.addCase(fetchTopRatedMovies.rejected, (state, action) => {
@@ -319,6 +289,21 @@ const moviesReducer = createSlice({
 
       state.search = action.payload;
     });
+    builder.addCase(searchPerson.pending, (state) => {
+      state.searchLoading = true;
+    });
+    builder.addCase(searchPerson.fulfilled, (state, action) => {
+      state.searchLoading = false;
+
+      if (action.payload.page > 1) {
+        action.payload.results = [
+          ...state.searchActor.results,
+          ...action.payload.results,
+        ];
+      }
+
+      state.searchActor = action.payload;
+    });
 
     builder.addCase(fetchMovieDetails.pending, (state) => {
       state.isLoadingDetails = true;
@@ -332,56 +317,6 @@ const moviesReducer = createSlice({
       state.genres = action.payload;
     });
 
-    // builder.addCase(addMovieToFavorites.fulfilled, (state, action) => {
-    //   const { movieId, isFavorite, context } = action.payload;
-
-    //   if (context === 'movieDetails') {
-    //     state.movieDetails.isFavorite = isFavorite;
-    //   }
-
-    //   if (context === 'topRated') {
-    //     state.topRated.results = state.topRated.results.map((movie) => {
-    //       if (movie.id === movieId) {
-    //         movie.isFavorite = isFavorite;
-    //       }
-
-    //       return movie;
-    //     });
-    //   }
-    // });
-    // builder.addCase(addMovieToWatchList.fulfilled, (state, action) => {
-    //   const { movieId, isInWatchList, context } = action.payload;
-
-    //   if (context === 'movieDetails') {
-    //     state.movieDetails.isInWatchList = isInWatchList;
-    //   }
-
-    //   if (context === 'topRated') {
-    //     state.topRated.results = state.topRated.results.map((movie) => {
-    //       if (movie.id === movieId) {
-    //         movie.isInWatchList = isInWatchList;
-    //       }
-
-    //       return movie;
-    //     });
-    //   }
-    // });
-
-    builder.addCase(fetchMovieAccountState.fulfilled, (state, action) => {
-      const { movieId, context, accountState } = action.payload;
-
-      if (context === "topRated") {
-        state.topRated.results = state.topRated.results.map((movie) => {
-          if (movie.id === movieId) {
-            movie.isFavorite = accountState.favorite;
-            movie.isInWatchList = accountState.watchlist;
-          }
-
-          return movie;
-        });
-      }
-    });
-
     builder.addCase(fetchPersonDetails.pending, (state) => {
       state.isLoadingDetails = true;
     });
@@ -389,7 +324,9 @@ const moviesReducer = createSlice({
       state.isLoadingDetails = false;
       state.personDetails = action.payload;
     });
-
+    builder.addCase(fetchPersonDetails.rejected, (state, action) => {
+      console.log(action);
+    });
     builder.addCase(fetchDiscover.pending, (state) => {
       state.isLoadingDetails = true;
     });

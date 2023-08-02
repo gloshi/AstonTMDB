@@ -18,7 +18,7 @@
 }
 .card {
   position: relative;
-  width: 260px;
+  width: 280px;
   cursor: pointer;
 }
 .title {
@@ -37,11 +37,11 @@
   width: 260px;
   border-radius: 4px;
   margin-bottom: 11px;
-  &:hover {
-    width: 270px;
-    transition: width 0.4s;
-    border-radius: 4px;
-  }
+  // &:hover {
+  //   width: 270px;
+  //   transition: width 0.4s;
+  //   border-radius: 4px;
+  // }
 }
 
 .rating {
