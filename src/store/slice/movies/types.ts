@@ -117,8 +117,3 @@ export interface ImageConfiguration {
   profile_sizes: string[];
 }
 
-export type MovieAccountStatePayload = {
-  movieId: number;
-  isFavorite: boolean;
-  context: string;
-};

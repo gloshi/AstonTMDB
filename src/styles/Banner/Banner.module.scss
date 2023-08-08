@@ -28,8 +28,29 @@
   color: lightblue;
 }
 
+.watch {
+  position: absolute;
+  z-index: 10;
+  left: 100px;
+  top: 1000px;
+
+  h3 {
+    font-size: 32px;
+    margin-bottom: 35px;
+    color: #fff;
+  }
+
+  button {
+    background: #0086e0;
+    color: #fff;
+  }
+}
+
 @media screen and (max-width: 1900px) {
   .arrows {
+    top: 800px;
+  }
+  .watch {
     top: 800px;
   }
 }
@@ -38,11 +59,16 @@
   .arrows {
     top: 700px;
   }
+  .watch {
+    top: 700px;
+  }
 }
 
-
 @media screen and (max-width: 1200px) {
-    .arrows {
-      top: 200px;
-    }
+  .arrows {
+    top: 300px;
   }
+  .watch {
+    top: 500px;
+  }
+}

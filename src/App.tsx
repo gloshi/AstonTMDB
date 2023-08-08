@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import {
+  fetchActors,
   fetchGenres,
   fetchNowPlayngMovies,
   fetchPopularMovies,
@@ -13,15 +14,17 @@ import Header from "./components/Header";
 import AppRouter from "./approutes/AppRouter";
 import Footer from "./components/Footer";
 
+
 function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(fetchPopularMovies());
     dispatch(fetchGenres());
     dispatch(fetchTrendingMovies());
-    dispatch(fetchPopularMovies());
-    dispatch(fetchNowPlayngMovies());
-    dispatch(fetchUpcomingMovies());
+    dispatch(fetchTopRatedMovies(1));
+    dispatch(fetchNowPlayngMovies(1));
+    dispatch(fetchUpcomingMovies(1));
+    dispatch((fetchActors(1)))
   }, [dispatch]);
 
   return (

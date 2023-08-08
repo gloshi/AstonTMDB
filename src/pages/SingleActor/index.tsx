@@ -13,7 +13,6 @@ const SingleActor = () => {
     dispatch(fetchPersonDetails(parseInt(id || "")));
   }, [dispatch, id]);
   const date = new Date()
-  console.log(actor)
   return (
     <main>
       <div className={styles.container}>

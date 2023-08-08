@@ -5,15 +5,14 @@ import {
   Configuration,
   Genre,
   IMovie,
-  MovieAccountState,
 } from "./types";
 import { useAxios } from "../../../hooks/useAxios";
-import { RootState } from "../..";
 
 export * from "./types";
 
 export interface MoviesState {
   isLoading: boolean;
+  isLoadingActors: boolean,
   configuration: Configuration;
   trending: IMovie[];
   isLoadingTrending: boolean;
@@ -25,6 +24,7 @@ export interface MoviesState {
   searchActor: PaginableResult<CastPerson[]>;
   discover: PaginableResult<IMovie[]>;
   searchLoading: boolean;
+  actors: PaginableResult<IActor[]>
   genres: Genre[];
   movieDetails: IMovie;
   personDetails: CastPerson;
@@ -53,9 +53,15 @@ export const initialConfiguration: Configuration = {
   },
   change_keys: [],
 };
-
+export interface IActor {
+  gender: number;
+  id: number;
+  name: string;
+  profile_path: string;
+}
 const initialState: MoviesState = {
   isLoading: false,
+  isLoadingActors: false,
   isLoadingTrending: false,
   isLoadingDetails: false,
   searchLoading: false,
@@ -68,6 +74,7 @@ const initialState: MoviesState = {
   search: initialPaginableResult,
   searchActor: initialPaginableResultforActor,
   discover: initialPaginableResult,
+  actors: initialPaginableResultforActor,
   genres: [] as Genre[],
   movieDetails: {} as IMovie,
   personDetails: {} as CastPerson,
@@ -92,7 +99,16 @@ export const fetchTrendingMovies = createAsyncThunk(
     return response.data.results;
   }
 );
-
+//actors
+export const fetchActors = createAsyncThunk(
+  "movies/actors",
+  async (page: number) => {
+    const response = await useAxios.get<PaginableResult<IActor[]>>(
+      `person/popular?&page=${page}`
+    );
+    return response.data;
+  }
+);
 export const fetchPopularMovies = createAsyncThunk(
   "movies/FETCH_POPULAR_MOVIES",
   async () => {
@@ -106,9 +122,10 @@ export const fetchPopularMovies = createAsyncThunk(
 
 export const fetchNowPlayngMovies = createAsyncThunk(
   "movies/FETCH_NOW_PLAYING_MOVIES",
-  async () => {
+
+  async (page: number) => {
     const response = await useAxios.get<PaginableResult<IMovie[]>>(
-      "movie/now_playing"
+      `movie/now_playing?page=${page}`
     );
 
     return response.data;
@@ -117,9 +134,10 @@ export const fetchNowPlayngMovies = createAsyncThunk(
 
 export const fetchUpcomingMovies = createAsyncThunk(
   "movies/FETCH_UPCOMING_MOVIES",
-  async () => {
+
+  async (page: number) => {
     const response = await useAxios.get<PaginableResult<IMovie[]>>(
-      "movie/upcoming"
+      `movie/upcoming?page=${page}`
     );
 
     return response.data;
@@ -176,26 +194,6 @@ export const fetchMovieDetails = createAsyncThunk(
   }
 );
 
-type FetchMovieAccountStateArgs = {
-  movieId: number;
-  context: string;
-};
-
-export const fetchMovieAccountState = createAsyncThunk(
-  "movies/FETCH_MOVIE_ACCOUNT_STATE",
-  async ({ movieId, context }: FetchMovieAccountStateArgs) => {
-    const movieAccountStateResponse = await useAxios.get<MovieAccountState>(
-      `/movie/${movieId}/account_states`
-    );
-
-    return {
-      movieId,
-      accountState: movieAccountStateResponse.data,
-      context,
-    };
-  }
-);
-
 export const fetchGenres = createAsyncThunk("movies/FETCH_GENRES", async () => {
   const response = await useAxios.get("genre/movie/list");
 
@@ -248,7 +246,13 @@ const moviesReducer = createSlice({
       state.isLoading = false;
       state.trending = action.payload;
     });
-
+    builder.addCase(fetchActors.pending, (state) => {
+      state.isLoadingActors = true;
+    });
+    builder.addCase(fetchActors.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.actors = action.payload;
+    });
     builder.addCase(fetchPopularMovies.fulfilled, (state, action) => {
       state.popular = action.payload;
     });

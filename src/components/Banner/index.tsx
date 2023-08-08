@@ -3,9 +3,11 @@ import { RootState } from "../../store";
 import { useSelector } from "react-redux";
 
 import styles from "../../styles/Banner/Banner.module.scss";
-import Button from "../Button";
+import Button, { ButtonSize, ThemeButtonChanger } from "../Button";
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
 import Load from "../../pages/Load";
+import { Link } from "react-router-dom";
+import { AppRoutes } from "../../approutes/RoutesConfig";
 const Banner: React.FC = memo(() => {
   const { popular, isLoading } = useSelector(
     (state: RootState) => state.movies
@@ -58,6 +60,16 @@ const Banner: React.FC = memo(() => {
         }`}
         alt={bannerArray[1].title}
       />
+      <div className={styles.watch}>
+        <Link
+          to={AppRoutes.SINGLE_MOVIE + `/${bannerArray[slideIndex - 1]?.id}`}
+        >
+          <h3>{bannerArray[slideIndex - 1]?.title}</h3>
+          <Button size={ButtonSize.XL} theme={ThemeButtonChanger.OUTLINE}>
+            Watch now{" "}
+          </Button>
+        </Link>
+      </div>
       <div className={styles.arrows}>
         <Button className={styles.arrowLeft} onClick={prevSlide}>
           <AiOutlineArrowLeft />

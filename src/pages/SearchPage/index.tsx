@@ -4,7 +4,8 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { searchMovies, searchPerson } from "../../store/slice/movies";
 import styles from "../../styles/SearchPage/SearchPage.module.scss";
 import Button, { ButtonSize } from "../../components/Button";
-import noPhoto from '../../img/nophoto.png'
+import noPhoto from "../../img/nophoto.png";
+import { useNavigate } from "react-router-dom";
 const SearchPage: React.FC = () => {
   const searchValue = useAppSelector((state) => state.search.value);
   const searchMovie = useAppSelector((state) => state.movies.search);
@@ -12,11 +13,11 @@ const SearchPage: React.FC = () => {
   const searchLoading = useAppSelector((state) => state.movies.searchLoading);
   const [visible, setVisible] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate()
   useEffect(() => {
     dispatch(searchMovies({ searchValue }));
     dispatch(searchPerson({ searchValue }));
   }, []);
-  console.log(searchMovie)
   return (
     <main className={styles.container}>
       <div className={styles.box}>
@@ -30,32 +31,44 @@ const SearchPage: React.FC = () => {
           </Button>
         </div>
       </div>
-      <div>
-        {!visible ? (
-          <div className={styles.search}>
-            {searchMovie.results.map((el) => (
-              <div className={styles.card}>
-                <img
-                  src={el.backdrop_path === null? noPhoto : `https://image.tmdb.org/t/p/original/${el.poster_path}`}
-                  alt={el.title}
-                />
-                <h3>{el.title}</h3>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className={styles.search}>
-            {Actor.results.map((el) => (
-              <div className={styles.card}>
-                <img
-                  src={`https://image.tmdb.org/t/p/original/${el.profile_path}`}
-                  alt={el.name}
-                />
-                <h3>{el.name}</h3>
-              </div>
-            ))}
-          </div>
-        )}
+      <div className={styles.searchResults}>
+        <div>
+          {!visible ? (
+            <div className={styles.search}>
+              {searchMovie.results.map((el) => (
+                <div className={styles.card}>
+                  <img
+                    src={
+                      el.backdrop_path === null
+                        ? noPhoto
+                        : `https://image.tmdb.org/t/p/original/${el.poster_path}`
+                    }
+                    onClick={() => navigate(`/movie/${el.id}`)}
+                    alt={el.title}
+                  />
+                  <h3>{el.title}</h3>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className={styles.search}>
+              {Actor.results.map((el) => (
+                <div className={styles.card}>
+                  <img
+                    src={
+                      el.profile_path === null
+                        ? noPhoto
+                        : `https://image.tmdb.org/t/p/original/${el.profile_path}`
+                    }
+                    onClick={() => navigate(`/actor/${el.id}`)}
+                    alt={el.name}
+                  />
+                  <h3>{el.name}</h3>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </main>
   );

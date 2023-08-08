@@ -9,37 +9,36 @@ import { AppRoutes } from "../../approutes/RoutesConfig";
 import { GrFavorite } from "react-icons/gr";
 import { BiStar } from "react-icons/bi";
 import { PaginableResult } from "../../store/types";
+import Button, { ButtonSize, ThemeButtonChanger } from "../Button";
 
 interface GridFilmsProps {
   category: IMovie[]
-  fetchMovies: any
   isLoading: boolean
   text: string
+  route: string
 }
 
 
-const GridFilms = memo(({ category, fetchMovies, text, isLoading }: GridFilmsProps) => {
-  const [page, setPage] = useState<number>(1);
+const GridFilms = memo(({ category, text, isLoading, route }: GridFilmsProps) => {
+  // const [page, setPage] = useState<number>(1);
   const [pageLoading, setPageLoading] = useState<boolean>(false);
-  const pagesArr = [1, 2, 3, 4, 5, 6, 7, 8];
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    getMovies();
-  }, [page]);
+  // useEffect(() => {
+  //   getMovies();
+  // }, [page]);
 
 
-  //get
-  const getMovies = async () => {
-    setPageLoading(true);
-    await dispatch(fetchMovies(page));
-    setPageLoading(false);
-  };
+  // //get
+  // const getMovies = async () => {
+  //   setPageLoading(true);
+  //   await dispatch(fetchMovies(page));
+  //   setPageLoading(false);
+  // };
 
   if (isLoading || pageLoading) {
     return <Load />;
   }
-
   return (
     <section className={styles.wrapper}>
       <h3 className={styles.text}>{text} movies</h3>
@@ -75,15 +74,9 @@ const GridFilms = memo(({ category, fetchMovies, text, isLoading }: GridFilmsPro
         ))}
       </div>
       <div className={styles.pages}>
-        {pagesArr.map((el, i) => (
-          <div
-            key={i}
-            onClick={() => setPage(i + 1)}
-            className={styles.pageNumber}
-          >
-            {el}
-          </div>
-        ))}
+        <Link to={route}>
+        <Button theme={ThemeButtonChanger.CLEAR} size={ButtonSize.M}>Показать все</Button>
+        </Link>
       </div>
     </section>
   );

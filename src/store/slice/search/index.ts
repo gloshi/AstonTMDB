@@ -10,7 +10,7 @@ const initialState: SeachProps = {
 }
 
 export const searchSlice = createSlice({
-  name: 'value',
+  name: 'actors',
   initialState,
   reducers: {
     setSearchValue: (state, action: PayloadAction<string>) => {
@@ -19,7 +19,6 @@ export const searchSlice = createSlice({
   },
 })
 
-// Action creators are generated for each case reducer function
 export const { setSearchValue} = searchSlice.actions
 
 export default searchSlice.reducer

@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import React, { useEffect, useMemo } from "react";
+import React, { Fragment, useEffect, useMemo } from "react";
 import { fetchMovieDetails } from "../../store/slice/movies";
 import styles from "../../styles/SingleFilm/SingleFilm.module.scss";
 import {
@@ -54,16 +54,15 @@ const SingleMovie: React.FC = () => {
           <p className={styles.overviewText}>{movie.overview}</p>
           <div className={styles.buttons}>
             {movie.videos.results.slice(0, 1).map((video) => (
-              <>
+              <Fragment key={video.id}>
                 <a
-                  key={video.id}
                   target="_blank"
                   href={`https://www.youtube.com/embed/${video.key}`}
                   className={styles.trailer}
                 >
                   Watch Trailer <AiOutlinePlaySquare />
                 </a>
-              </>
+              </Fragment>
             ))}
 
             <Button size={ButtonSize.XL} className={styles.favorite}>

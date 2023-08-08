@@ -1,11 +1,11 @@
-import React, { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { CastPerson } from "../../store/slice/movies";
 import ReactPaginate from "react-paginate";
 import styles from "../../styles/ActorList/ActorList.module.scss";
 import Input from "../Input";
 import noPhoto from "../../img/nophoto.png";
-import { Link, useNavigate } from "react-router-dom";
-import { AppRoutes } from "../../approutes/RoutesConfig";
+import { useNavigate } from "react-router-dom";
+import Load from "../../pages/Load";
 interface ActorsListProps {
   list?: CastPerson[];
 }
@@ -22,9 +22,7 @@ const ActorsList = memo((props: ActorsListProps) => {
   const itemsPerPage = 25;
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
-
     setCurrentItems(list!.props!.list!.slice(itemOffset, endOffset));
-
     setPageCount(Math.ceil(list!.props!.list!.length / itemsPerPage));
   }, [itemOffset, itemsPerPage, list.props.list]);
 
@@ -34,7 +32,7 @@ const ActorsList = memo((props: ActorsListProps) => {
     setItemOffset(newOffset);
   };
   if (!list.props.list) {
-    return <div>load...</div>;
+    return <Load />;
   }
   return (
     <section className={styles.container}>
