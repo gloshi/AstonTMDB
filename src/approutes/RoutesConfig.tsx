@@ -10,6 +10,7 @@ import NowPlaying from "../pages/NowPlaying";
 import TopRated from "../pages/TopRated";
 import Favorites from "../pages/Favorites";
 import Actors from "../pages/Actors";
+import { lazy } from "react";
 
 export enum AppRoutes {
   MAIN = "/",
@@ -25,6 +26,15 @@ export enum AppRoutes {
   //last
   NOT_FOUND = "error",
 }
+
+const MainPage = lazy(() => import("../pages/Main"));
+const Search = lazy(() => import("../pages/SearchPage"));
+const SingleActorPage = lazy(() => import("../pages/SingleActor"));
+const SingleMoviePage = lazy(() => import("../pages/SingleMovie"));
+const UpcomingPage = lazy(() => import("../pages/Upcoming"));
+const NowPlayingPage = lazy(() => import("../pages/NowPlaying"));
+const TopRatedPage = lazy(() => import("../pages/TopRated"));
+const ActorsPage = lazy(() => import("../pages/Actors"));
 
 export const RoutePath: Record<AppRoutes, string> = {
   [AppRoutes.MAIN]: "/",
@@ -44,15 +54,15 @@ export const RoutePath: Record<AppRoutes, string> = {
 export const routeConfig: Record<AppRoutes, RouteProps> = {
   [AppRoutes.MAIN]: {
     path: "/",
-    element: <Main />,
+    element: <MainPage />,
   },
   [AppRoutes.SEARCH]: {
     path: RoutePath.search,
-    element: <SearchPage />,
+    element: <Search />,
   },
   [AppRoutes.TOP_RATED]: {
     path: RoutePath.rated,
-    element: <TopRated />,
+    element: <TopRatedPage />,
   },
   [AppRoutes.GENRES]: {
     path: RoutePath.genres,
@@ -60,19 +70,19 @@ export const routeConfig: Record<AppRoutes, RouteProps> = {
   },
   [AppRoutes.UPCOMING]: {
     path: RoutePath.upcoming,
-    element: <Upcoming />,
+    element: <UpcomingPage />,
   },
   [AppRoutes.NOWPLAYNG]: {
     path: RoutePath.nowplayng,
-    element: <NowPlaying />,
+    element: <NowPlayingPage />,
   },
   [AppRoutes.SINGLE_MOVIE]: {
     path: `${RoutePath.movie}/:id`,
-    element: <SingleMovie />,
+    element: <SingleMoviePage />,
   },
   [AppRoutes.SINGLE_ACTOR]: {
     path: `${RoutePath.actor}/:id`,
-    element: <SingleActor />,
+    element: <SingleActorPage />,
   },
   [AppRoutes.FAVORITES]: {
     path: RoutePath.favorites,
@@ -80,7 +90,7 @@ export const routeConfig: Record<AppRoutes, RouteProps> = {
   },
   [AppRoutes.ACTORS]: {
     path: RoutePath.actors,
-    element: <Actors />,
+    element: <ActorsPage />,
   },
   //last
   [AppRoutes.NOT_FOUND]: {
