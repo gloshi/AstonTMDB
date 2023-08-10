@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { fetchPersonDetails } from "../../store/slice/movies";
@@ -6,7 +6,6 @@ import styles from "../../styles/SingleActor/SingleActor.module.scss";
 import { useAppSelector } from "../../hooks/useAppSelector";
 const SingleActor = () => {
   const { id } = useParams<string>();
-  const params = useParams();
   const dispatch = useAppDispatch();
   const actor = useAppSelector((state) => state.movies.personDetails);
   useEffect(() => {

@@ -2,12 +2,11 @@ import styles from "../../styles/PageCategory/PageCategory.module.scss";
 import { GrFavorite } from "react-icons/gr";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import Load from "../Load";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { fetchTopRatedMovies } from "../../store/slice/movies";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { BiStar } from "react-icons/bi";
-import { Link, useNavigate } from "react-router-dom";
-import { AppRoutes } from "../../approutes/RoutesConfig";
+import { useNavigate } from "react-router-dom";
 
 const TopRated: React.FC = () => {
   const { topRated, isLoading } = useAppSelector((state) => state.movies);

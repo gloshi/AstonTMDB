@@ -3,11 +3,28 @@ import styles from "../../styles/Main/Main.module.scss";
 import { useAppSelector } from "../../hooks/useAppSelector";
 import GridFilms from "../../components/GridFilms";
 import { AppRoutes } from "../../approutes/RoutesConfig";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useEffect } from "react";
+import {
+  fetchActors,
+  fetchNowPlayngMovies,
+  fetchPopularMovies,
+  fetchTopRatedMovies,
+  fetchUpcomingMovies,
+} from "../../store/slice/movies";
 
 const Main: React.FC = () => {
   const { topRated, upcoming, nowPlaying, isLoading } = useAppSelector(
-    (state) => state.movies,
+    (state) => state.movies
   );
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchPopularMovies());
+    dispatch(fetchTopRatedMovies(1));
+    dispatch(fetchNowPlayngMovies(1));
+    dispatch(fetchUpcomingMovies(1));
+  }, [dispatch]);
 
   return (
     <main className={styles.wrapper}>

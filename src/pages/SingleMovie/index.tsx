@@ -1,7 +1,7 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import React, { Fragment, useEffect, useMemo } from "react";
+import React, { Fragment, useEffect } from "react";
 import { fetchMovieDetails } from "../../store/slice/movies";
 import styles from "../../styles/SingleFilm/SingleFilm.module.scss";
 import {
