@@ -6,7 +6,7 @@ export enum ThemeButtonChanger {
   CLEAR = "clear",
   OUTLINE = "outline",
   OUTLINE_RED = "outline_red",
-  OUTLINE_CANCEL = 'outline_cancel'  
+  OUTLINE_CANCEL = "outline_cancel",
 }
 
 export enum ButtonSize {

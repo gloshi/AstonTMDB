@@ -6,7 +6,7 @@ import { AppRoutes } from "../../approutes/RoutesConfig";
 
 const Main: React.FC = () => {
   const { topRated, upcoming, nowPlaying, isLoading } = useAppSelector(
-    (state) => state.movies
+    (state) => state.movies,
   );
 
   return (

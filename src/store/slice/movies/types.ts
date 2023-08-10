@@ -1,4 +1,4 @@
-import { PaginableResult } from '../../types';
+import { PaginableResult } from "../../types";
 
 export interface Configuration {
   change_keys: string[];
@@ -116,4 +116,3 @@ export interface ImageConfiguration {
   poster_sizes: string[];
   profile_sizes: string[];
 }
-

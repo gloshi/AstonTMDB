@@ -1,42 +1,42 @@
 .Button {
-    cursor: pointer;
-    padding: 6px 15px;
+  cursor: pointer;
+  padding: 6px 15px;
 
-    &:hover {
-        opacity: 0.7;
-        fill-opacity: 0.8;
-    }
+  &:hover {
+    opacity: 0.7;
+    fill-opacity: 0.8;
+  }
 }
 
 .clear {
-    padding: 0;
-    border: none;
-    background: none;
-    outline: none;
+  padding: 0;
+  border: none;
+  background: none;
+  outline: none;
 }
 .outline {
-    border: 1px solid black;
-    color: black;
-    background: none;
+  border: 1px solid black;
+  color: black;
+  background: none;
 }
 .outline_cancel {
-    position: absolute;
-    left: 350px;
-    background: none;
-    border: none;
+  position: absolute;
+  left: 350px;
+  background: none;
+  border: none;
 }
 
 .size_m {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .size_l {
-    font-size: 22px;
+  font-size: 22px;
 }
 
 .size_xl {
-    font-size: 30px;
+  font-size: 30px;
 }
 .disabled {
-    opacity: 0.44;
+  opacity: 0.44;
 }

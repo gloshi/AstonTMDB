@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { AppRoutes } from "../../approutes/RoutesConfig";
 const Banner: React.FC = memo(() => {
   const { popular, isLoading } = useSelector(
-    (state: RootState) => state.movies
+    (state: RootState) => state.movies,
   );
   const bannerArray = useMemo(() => popular.results.slice(0, 7), [popular]);
   const numbersArray = [1, 2, 3, 4, 5, 6, 7];
@@ -28,7 +28,7 @@ const Banner: React.FC = memo(() => {
           {el}
         </span>
       )),
-    [slideIndex]
+    [slideIndex],
   );
   const nextSlide = () => {
     if (slideIndex !== bannerArray.length) {
@@ -55,9 +55,8 @@ const Banner: React.FC = memo(() => {
     <section className={styles.wrapper}>
       <img
         className={styles.bannerimg}
-        src={`https://image.tmdb.org/t/p/original/${
-          bannerArray[slideIndex - 1]?.backdrop_path
-        }`}
+        src={`https://image.tmdb.org/t/p/original/${bannerArray[slideIndex - 1]
+          ?.backdrop_path}`}
         alt={bannerArray[1].title}
       />
       <div className={styles.watch}>

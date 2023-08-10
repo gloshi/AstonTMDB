@@ -1,12 +1,12 @@
-import styles from '../../styles/PageCategory/PageCategory.module.scss'
+import styles from "../../styles/PageCategory/PageCategory.module.scss";
 import { GrFavorite } from "react-icons/gr";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import Load from '../Load';
-import { BiStar } from 'react-icons/bi';
-import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { useNavigate } from 'react-router-dom';
-import { fetchUpcomingMovies } from '../../store/slice/movies';
+import Load from "../Load";
+import { BiStar } from "react-icons/bi";
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useNavigate } from "react-router-dom";
+import { fetchUpcomingMovies } from "../../store/slice/movies";
 
 const Upcoming: React.FC = () => {
   const { upcoming, isLoading } = useAppSelector((state) => state.movies);
@@ -24,9 +24,9 @@ const Upcoming: React.FC = () => {
     setPageLoading(false);
   };
   if (isLoading || pageLoading) {
-    return <Load/>;
+    return <Load />;
   }
- 
+
   return (
     <section className={styles.wrapper}>
       <h3 className={styles.text}>Upcoming movies</h3>
@@ -34,9 +34,7 @@ const Upcoming: React.FC = () => {
         {upcoming.results.map((el, i) => (
           <div key={el.id} className={styles.card}>
             <img
-             onClick={() =>
-              navigate(`/movie/${el.id}`)
-            }
+              onClick={() => navigate(`/movie/${el.id}`)}
               className={styles.poster}
               src={`https://image.tmdb.org/t/p/original/${el.poster_path}`}
               alt={el.title}
@@ -55,7 +53,10 @@ const Upcoming: React.FC = () => {
               <span className={styles.year}>{el.release_date.slice(0, 4)}</span>
               <GrFavorite />
             </div>
-            <div className={styles.rating}><BiStar color="white"/><span>{el.vote_average}</span></div>
+            <div className={styles.rating}>
+              <BiStar color="white" />
+              <span>{el.vote_average}</span>
+            </div>
           </div>
         ))}
       </div>

@@ -21,7 +21,7 @@ const Header: React.FC = memo(() => {
           <Link to={AppRoutes.UPCOMING}>Upcoming</Link>
           <Link to={AppRoutes.NOWPLAYNG}>Now Playing</Link>
           <Link to={AppRoutes.ACTORS}>Actors</Link>
-          <Link to={AppRoutes.FAVORITES}>Favorites</Link>
+          {/* <Link to={AppRoutes.FAVORITES}>Favorites</Link> */}
         </nav>
       </div>
     </header>

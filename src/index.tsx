@@ -8,7 +8,7 @@ import { store } from "./store";
 import ErrorBoundary from "./approutes/ErrorBoundary";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById("root") as HTMLElement,
 );
 root.render(
   <ErrorBoundary>
@@ -19,5 +19,5 @@ root.render(
         </React.StrictMode>
       </Provider>
     </BrowserRouter>
-  </ErrorBoundary>
+  </ErrorBoundary>,
 );

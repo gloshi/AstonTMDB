@@ -20,12 +20,12 @@ const Search: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.box}>
         <Link to={AppRoutes.SEARCH}>
-        <Button
-          disabled={searchValue.length < 1}
-          theme={ThemeButtonChanger.CLEAR}
-        >
-          <BsSearch size={40} className={styles.Icon} />
-        </Button>
+          <Button
+            disabled={searchValue.length < 1}
+            theme={ThemeButtonChanger.CLEAR}
+          >
+            <BsSearch size={40} className={styles.Icon} />
+          </Button>
         </Link>
         <Input
           onChange={(e) => dispatch(setSearchValue(e))}

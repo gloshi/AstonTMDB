@@ -1,12 +1,12 @@
-import styles from '../../styles/PageCategory/PageCategory.module.scss'
+import styles from "../../styles/PageCategory/PageCategory.module.scss";
 import { GrFavorite } from "react-icons/gr";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import Load from '../Load';
-import { BiStar } from 'react-icons/bi';
-import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { useNavigate } from 'react-router-dom';
-import { fetchUpcomingMovies } from '../../store/slice/movies';
+import Load from "../Load";
+import { BiStar } from "react-icons/bi";
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useNavigate } from "react-router-dom";
+import { fetchActors } from "../../store/slice/movies";
 
 const Actors: React.FC = () => {
   const { actors, isLoading } = useAppSelector((state) => state.movies);
@@ -20,14 +20,12 @@ const Actors: React.FC = () => {
 
   const getMovies = async () => {
     setPageLoading(true);
-    await dispatch(fetchUpcomingMovies(page));
+    await dispatch(fetchActors(page));
     setPageLoading(false);
   };
   if (isLoading || pageLoading) {
-    return <Load/>;
+    return <Load />;
   }
-  console.log(page)
-  console.log(actors)
   return (
     <section className={styles.wrapper}>
       <h3 className={styles.text}>Actors</h3>
@@ -35,9 +33,7 @@ const Actors: React.FC = () => {
         {actors.results.map((el, i) => (
           <div key={el.id} className={styles.card}>
             <img
-             onClick={() =>
-              navigate(`/actor/${el.id}`)
-            }
+              onClick={() => navigate(`/actor/${el.id}`)}
               className={styles.poster}
               src={`https://image.tmdb.org/t/p/original/${el.profile_path}`}
               alt={el.name}

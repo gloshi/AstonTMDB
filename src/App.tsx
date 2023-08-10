@@ -14,7 +14,6 @@ import Header from "./components/Header";
 import AppRouter from "./approutes/AppRouter";
 import Footer from "./components/Footer";
 
-
 function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -24,17 +23,17 @@ function App() {
     dispatch(fetchTopRatedMovies(1));
     dispatch(fetchNowPlayngMovies(1));
     dispatch(fetchUpcomingMovies(1));
-    dispatch((fetchActors(1)))
+    dispatch(fetchActors(1));
   }, [dispatch]);
 
   return (
     <div className="App">
       <div className="content">
-      <Header />
-      <AppRouter />
+        <Header />
+        <AppRouter />
       </div>
       <div className="footer">
-      <Footer/>
+        <Footer />
       </div>
     </div>
   );

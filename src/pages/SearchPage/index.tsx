@@ -13,7 +13,7 @@ const SearchPage: React.FC = () => {
   const searchLoading = useAppSelector((state) => state.movies.searchLoading);
   const [visible, setVisible] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(searchMovies({ searchValue }));
     dispatch(searchPerson({ searchValue }));

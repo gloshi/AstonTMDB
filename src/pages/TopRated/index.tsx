@@ -36,9 +36,7 @@ const TopRated: React.FC = () => {
         {topRated.results.map((el, i) => (
           <div key={el.id} className={styles.card}>
             <img
-              onClick={() =>
-                navigate(`/movie/${el.id}`)
-              }
+              onClick={() => navigate(`/movie/${el.id}`)}
               className={styles.poster}
               src={`https://image.tmdb.org/t/p/original/${el.poster_path}`}
               alt={el.title}

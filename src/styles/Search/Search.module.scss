@@ -1,16 +1,14 @@
 .container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-left: 200px;
-   
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: 200px;
 }
 .Icon {
-    width: 50px;
-    cursor: pointer;
-
+  width: 50px;
+  cursor: pointer;
 }
 .box {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
