@@ -28,7 +28,7 @@ const Main: React.FC = () => {
 
   return (
     <main className={styles.wrapper}>
-      <Banner />
+      {/* <Banner /> */}
       <div className={styles.center}>
         <GridFilms
           isLoading={isLoading}
